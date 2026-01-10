@@ -3,13 +3,13 @@ import SwiftUI
 struct EmployeeBorrowingView: View {
 
     @StateObject private var vm = EmployeeViewModel()
-
+    @ObservedObject var authVM: AuthViewModel
     var body: some View {
 
         ScrollView(.horizontal) {
             VStack(spacing: 0) {
 
-                // 🧾 HEADER
+                
                 HStack {
                     Text("Title").frame(width: 250, alignment: .leading)
                     Text("Member").frame(width: 140, alignment: .leading)
@@ -23,7 +23,7 @@ struct EmployeeBorrowingView: View {
 
                 Divider()
 
-                // 📋 VERTICAL SCROLL
+             
                 ScrollView(.vertical) {
                     LazyVStack(spacing: 0) {
                         ForEach(vm.borrowings) { item in
@@ -32,29 +32,29 @@ struct EmployeeBorrowingView: View {
 
                             HStack {
 
-                                // 📚 Title
+                               
                                 Text(item.collection.title)
                                     .frame(width: 250, alignment: .leading)
                                     .font(.subheadline)
                                     .lineLimit(1)
 
-                                // 👤 Member
+                                
                                 Text(item.participant.name)
                                     .frame(width: 140, alignment: .leading)
                                     .font(.caption)
                                     .lineLimit(1)
 
-                                // 📅 Borrow
+                                
                                 Text(item.borrowDate.formatted(date: .numeric, time: .omitted))
                                     .frame(width: 100)
                                     .font(.caption)
 
-                                // 📅 Return
+                             
                                 Text(item.returnDate.formatted(date: .numeric, time: .omitted))
                                     .frame(width: 100)
                                     .font(.caption)
 
-                                // 🔘 RETURN BUTTON
+                            
                                 Button {
                                     Task {
                                         await vm.returnBook(borrowing: item)
@@ -71,10 +71,10 @@ struct EmployeeBorrowingView: View {
                                 .frame(width: 110, height: 32)
                                 .contentShape(Rectangle())
                                 .buttonStyle(.plain)
-                                .background(isAvailable ? Color.gray : Color.green) // 🔑 warna hijau kalau available = false
+                                .background(isAvailable ? Color.gray : Color.green)
                                 .foregroundColor(.white)
                                 .cornerRadius(6)
-                                .disabled(isAvailable || isUpdating) // 🔑 disable kalau sudah available
+                                .disabled(isAvailable || isUpdating) 
                                 .opacity(isAvailable ? 0.5 : 1)
                             }
                             .padding(.horizontal)
@@ -95,5 +95,14 @@ struct EmployeeBorrowingView: View {
             await vm.fetchBorrowings()
         }
         .navigationTitle("Borrowed Books")
+        .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(role: .destructive) {
+                            authVM.logout()
+                        } label: {
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                        }
+                    }
+                }
     }
 }

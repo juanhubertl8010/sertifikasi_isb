@@ -11,7 +11,7 @@ struct Participant: Identifiable, Decodable {
     let id: UUID
     let name: String
     let email: String
-    let role: String?        // "member" atau "employee"
+    let role: String?       
     let createdAt: Date?
 
     enum CodingKeys: String, CodingKey {

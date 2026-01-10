@@ -1,17 +1,29 @@
-//
-//  Sertifikasi_ISBTests.swift
-//  Sertifikasi_ISBTests
-//
-//  Created by Juan Hubert Liem on 10/01/26.
-//
-
 import Testing
 @testable import Sertifikasi_ISB
 
-struct Sertifikasi_ISBTests {
+struct AuthViewModelTests {
 
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+    @MainActor
+    @Test func loginFailsWhenPasswordIsEmpty() async throws {
+        let vm = AuthViewModel()
+        
+        vm.email = "juan@example.com"
+        vm.password = ""
+        
+        await vm.login()
+        
+        #expect(vm.isLoggedIn == false)
     }
-
+    
+    @MainActor
+    @Test func loginSuccess() async throws {
+        let vm = AuthViewModel()
+        
+        vm.email = "member5@library.com"
+        vm.password = "password12345"
+        
+        await vm.login()
+        
+        #expect(vm.isLoggedIn == true)
+    }
 }

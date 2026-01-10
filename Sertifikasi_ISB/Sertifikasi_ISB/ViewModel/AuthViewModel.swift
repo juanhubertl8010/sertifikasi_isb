@@ -67,5 +67,20 @@ class AuthViewModel: ObservableObject {
             print("❌ Failed create dummy user:", error)
         }
     }
-    
+    func logout() {
+        Task {
+            do {
+                try await SupabaseService.shared.client.auth.signOut()
+            } catch {
+                print("Logout error:", error)
+            }
+
+            // Reset state (WAJIB)
+            self.email = ""
+            self.password = ""
+            self.participant = nil
+            self.isLoggedIn = false
+        }
+    }
+
 }

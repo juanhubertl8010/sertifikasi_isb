@@ -15,7 +15,7 @@ struct RootView: View {
 
                 case "employee":
                     NavigationStack {
-                        EmployeeBorrowingView(participant: participant)
+                        EmployeeBorrowingView()
                     }
 
                 default:

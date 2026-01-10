@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Participant: Codable, Identifiable {
+struct Participant: Identifiable, Decodable {
     let id: UUID
     let name: String
     let email: String
-    let role: String        // "member" atau "employee"
-    let createdAt: Date
+    let role: String?        // "member" atau "employee"
+    let createdAt: Date?
 
     enum CodingKeys: String, CodingKey {
         case id

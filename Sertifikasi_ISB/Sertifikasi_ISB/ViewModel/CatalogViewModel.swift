@@ -1,30 +1,22 @@
-//
-//  CatalogViewModel.swift
-//  Sertifikasi_ISB
-//
-//  Created by Juan Hubert Liem on 10/01/26.
-//
-
 import Foundation
 import Supabase
 import Combine
-// MARK: - ViewModel
+
 @MainActor
 final class CatalogViewModel: ObservableObject {
 
-    // MARK: - Published Properties
-    @Published private(set) var collections: [Collection] = []
+    // MARK: - Published
+    @Published var collections: [Collection] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
 
-    // MARK: - Dependencies
+    // MARK: - Supabase
     private let client = SupabaseService.shared.client
 
-    // MARK: - Public Methods
+    // MARK: - Fetch
     func fetchCollections() async {
         isLoading = true
         errorMessage = nil
-
         defer { isLoading = false }
 
         do {
@@ -36,19 +28,24 @@ final class CatalogViewModel: ObservableObject {
                 .value
         } catch {
             errorMessage = error.localizedDescription
-            print("Fetch collections error:", error)
+            print("❌ Fetch collections error:", error)
         }
     }
 
+    // MARK: - Borrow
     func borrowCollection(
         _ collection: Collection,
         by participantID: UUID
     ) async {
+
         guard collection.available else { return }
+
+        // 1️⃣ Optimistic UI update
+        guard let index = collections.firstIndex(where: { $0.id == collection.id }) else { return }
+        collections[index].available = false
 
         isLoading = true
         errorMessage = nil
-
         defer { isLoading = false }
 
         let borrowDate = Date()
@@ -62,37 +59,26 @@ final class CatalogViewModel: ObservableObject {
         )
 
         do {
-            try await insertBorrowing(payload)
-            try await updateCollectionAvailability(
-                collectionID: collection.id,
-                available: false
-            )
-            await fetchCollections()
+            // 2️⃣ Insert borrowing
+            try await client
+                .from("borrowings")
+                .insert(payload)
+                .select() // 🔥 WAJIB
+                .execute()
+
+            // 3️⃣ Update availability
+            try await client
+                .from("collections")
+                .update(["available": false])
+                .eq("id", value: collection.id)
+                .select() // 🔥 WAJIB
+                .execute()
+
         } catch {
+            // 4️⃣ Rollback UI kalau gagal
+            collections[index].available = true
             errorMessage = error.localizedDescription
-            print("Borrow collection error:", error)
+            print("❌ Borrow error:", error)
         }
-    }
-}
-
-// MARK: - Private Helpers
-private extension CatalogViewModel {
-
-    func insertBorrowing(_ payload: BorrowingInsert) async throws {
-        try await client
-            .from("borrowings")
-            .insert(payload)
-            .execute()
-    }
-
-    func updateCollectionAvailability(
-        collectionID: UUID,
-        available: Bool
-    ) async throws {
-        try await client
-            .from("collections")
-            .update(["available": available])
-            .eq("id", value: collectionID)
-            .execute()
     }
 }

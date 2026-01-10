@@ -1,10 +1,3 @@
-//
-//  BorrowingInsert.swift
-//  Sertifikasi_ISB
-//
-//  Created by Juan Hubert Liem on 10/01/26.
-//
-
 import Foundation
 
 struct BorrowingInsert: Encodable {
@@ -13,4 +6,3 @@ struct BorrowingInsert: Encodable {
     let borrow_date: Date
     let return_date: Date
 }
-

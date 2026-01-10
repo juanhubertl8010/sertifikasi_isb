@@ -1,3 +1,10 @@
+//
+//  Sertifikasi_ISBApp.swift
+//  Sertifikasi_ISB
+//
+//  Created by Juan Hubert Liem on 10/01/26.
+//
+
 import SwiftUI
 
 @main

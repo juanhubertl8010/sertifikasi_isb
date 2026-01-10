@@ -11,5 +11,5 @@ struct Collection: Identifiable, Decodable {
     let id: UUID
     let title: String
     let author: String
-    let available: Bool
+    var available: Bool
 }

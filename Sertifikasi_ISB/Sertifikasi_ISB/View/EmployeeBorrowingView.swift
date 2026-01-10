@@ -94,7 +94,7 @@ struct EmployeeBorrowingView: View {
         .task {
             await vm.fetchBorrowings()
         }
-        .navigationTitle("Borrowed Books")
+        .navigationTitle("Borrowing List")
         .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(role: .destructive) {

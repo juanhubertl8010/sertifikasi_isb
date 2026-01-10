@@ -20,7 +20,7 @@ struct MemberCatalogView: View {
                 
                 Spacer()
                 
-                Text(item.available ? "Available" : "Borrowed")
+                Text(item.available ? "Available" : "On Loan")
                     .font(.caption.bold())
                     .foregroundColor(.white)
                     .padding(.horizontal, 10)
@@ -55,7 +55,7 @@ struct MemberCatalogView: View {
         .task {
             await vm.fetchCollections()
         }
-        .navigationTitle("Catalog")
+        .navigationTitle("Book Catalog")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(role: .destructive) {

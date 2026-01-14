@@ -1,29 +1,30 @@
-# 📚 Library Management App
+# Library Management App
 
-Library Management App is an **iOS application** designed to support digital library management. This application allows **members** to browse the book catalog and borrow books, while **employees** can record and monitor borrowed collections.
+Library Management App is an iOS application designed to support digital library management. The application allows members to browse the library catalog and borrow books, while employees can record and monitor borrowed collections.
 
 ---
 
-## 🎯 Project Objectives
+## Project Objectives
 
 - Provide a digital library catalog accessible to members
-- Record book borrowing activities in a structured and digital way
-- Help employees monitor borrowed books efficiently
+- Record book borrowing activities in a structured and digital manner
+- Assist employees in monitoring borrowed books efficiently
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
-This project uses the **MVVM (Model–View–ViewModel)** architecture:
-- **Model**: Represents application data (Participants, Collections, Borrowings)
-- **View**: UI built using SwiftUI
-- **ViewModel**: Handles business logic, state management, and API communication
+This project follows the MVVM (Model–View–ViewModel) architecture pattern.
+
+- Model: Represents application data such as participants, collections, and borrowings
+- View: User interface implemented using SwiftUI
+- ViewModel: Handles business logic, state management, and communication with backend services
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 
-### Language & Framework
+### Language and Framework
 - Swift
 - SwiftUI
 
@@ -31,43 +32,67 @@ This project uses the **MVVM (Model–View–ViewModel)** architecture:
 - Foundation
 - Combine
 
-### Backend & Database
+### Backend and Database
 - PostgREST
-- Supabase (External Library)
+- Supabase (external library)
 
 ---
 
-## ✨ Features
+## Features
 
-### 🔐 Authentication
+### Authentication
 - User login system
-- Role-based access (Member & Employee)
+- Role-based access control (Member and Employee)
 
-### 📖 Book Catalog
-- Display all available library collections
-- Show book status (Available / Borrowed)
+### Book Catalog
+- Displays all available library collections
+- Shows book status (Available or Borrowed)
 - Members can borrow books directly from the catalog
 
-### 📝 Book Borrowing
+### Book Borrowing
 - Borrowing records include:
   - Borrowed book
   - Borrower (member)
   - Borrow date
-  - Due date (7 days after borrow date)
+  - Due date (automatically set to 7 days after the borrow date)
 
-### 👨‍💼 Employee Dashboard
-- View list of currently borrowed books
-- Monitor borrowers and due dates
-
----
-
-## 🗄️ Database Tables
-
-The application uses **three main tables**:
-
-### 📌 participants
-### 📌 collections
-### 📌 borrowings
+### Employee Dashboard
+- Displays a list of currently borrowed books
+- Allows employees to monitor borrowers and due dates
 
 ---
 
+## Borrowing Rules
+
+- Borrowing duration is 7 days
+- Due date is automatically calculated from the borrow date
+
+---
+
+## Database Tables
+
+The application uses three main tables in the database.
+
+### participants
+Stores user information.
+- id
+- name
+- email
+- role (member or employee)
+
+### collections
+Stores library collection data.
+- id
+- title
+- author
+- available
+
+### borrowings
+Stores book borrowing records.
+- id
+- participant_id
+- collection_id
+- borrow_date
+- return_date
+
+---

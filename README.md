@@ -96,3 +96,7 @@ Stores book borrowing records.
 - return_date
 
 ---
+
+### ERD
+
+![Image](https://github.com/user-attachments/assets/00deff75-1499-4680-9584-299f899e233e)

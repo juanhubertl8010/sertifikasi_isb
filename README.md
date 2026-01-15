@@ -104,5 +104,7 @@ Stores book borrowing records.
 ### Unit Testing
 <img width="721" height="277" alt="Image" src="https://github.com/user-attachments/assets/df5b33d3-69a1-4e75-924a-73a7cb181d39" />
 
-- Gambar diatas adalah contoh unit testing menggunakan white box, pada gambar diatas sistem munguji jika password empty itu harusnya tidak bisa login. dan hasil dari unit testingnya adalah success
+- Gambar diatas adalah contoh unit testing menggunakan white box, pada gambar diatas sistem munguji jika password empty itu harusnya tidak bisa login. dan hasil dari unit testingnya adalah success yakni user tidak dapat login
 
+<img width="721" height="222" alt="Image" src="https://github.com/user-attachments/assets/6188430e-f736-4b2f-8376-50ee3426a721" />
+- Gambar diatas sistem menguji jika email dan password yang dimasukkan sesuai maka hasilnya harusnya bisa login dan dari hasil unit testingnya adalah sukses dimana user bisa login
